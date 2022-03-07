@@ -6,6 +6,9 @@ const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
 <style class="wistia_style">
   .wistia_embed {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
   }
