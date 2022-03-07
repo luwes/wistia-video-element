@@ -2,7 +2,7 @@
   "name": "wistia-video-element",
   "version": "0.0.4",
   "type": "module",
-  "description": "Custom element (web component) for the JW player.",
+  "description": "Custom element (web component) for the Wistia player.",
   "keywords": [
     "wistia",
     "video",
