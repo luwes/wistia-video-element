@@ -8,7 +8,7 @@ One of the goals was to have `<wistia-video>` seamlessly integrate with [Media C
 
 > 🙋 Looking for a YouTube video element? Check out [`<youtube-video>`](https://github.com/muxinc/youtube-video-element).
 
-## Example ([CodeSandbox](https://codesandbox.io/s/wistia-video-element-gm5qd1))
+## Example ([CodeSandbox](https://codesandbox.io/s/wistia-video-element-ozylhs))
 
 <!-- prettier-ignore -->
 ```html
