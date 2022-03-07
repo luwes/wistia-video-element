@@ -1,15 +1,10 @@
+// https://wistia.com/support/developers/player-api
 import VideoBaseElement from './video-base-element.js';
 import { loadScript, promisify, publicPromise } from './utils.js';
 
 const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
-<style class="jw-style">
-  .jw-no-controls [class*="jw-controls"],
-  .jw-no-controls .jw-title {
-    display: none !important;
-  }
-</style>
-<div class="jwplayer"></div>
+<div class="wistia_embed"></div>
 `;
 
 const templateShadowDOM = document.createElement('template');
@@ -25,7 +20,7 @@ templateShadowDOM.innerHTML = `
 <slot></slot>
 `;
 
-class JWPlayerVideoElement extends VideoBaseElement {
+class WistiaVideoElement extends VideoBaseElement {
   constructor() {
     super();
 
@@ -34,36 +29,42 @@ class JWPlayerVideoElement extends VideoBaseElement {
   }
 
   get nativeEl() {
-    return this.querySelector('.jw-video');
+    return this.api?.elem();
   }
 
   async load() {
     if (this.hasLoaded) this.loadComplete = publicPromise();
     this.hasLoaded = true;
 
-    // e.g. https://cdn.jwplayer.com/players/C8YE48zj-IxzuqJ4M.html
-    const MATCH_SRC = /jwplayer\.com\/players\/(\w+)(?:-(\w+))?/i;
-    const [, videoId, playerId] = this.src.match(MATCH_SRC);
-    const mediaUrl = `https://cdn.jwplayer.com/v2/media/${videoId}`;
-    const media = await (await fetch(mediaUrl)).json();
-    const scriptUrl = `https://content.jwplatform.com/libraries/${playerId}.js`;
-    const JW = await loadScript(scriptUrl, 'jwplayer');
+    const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/i;
+    const [, id] = this.src.match(MATCH_SRC);
+    const options = {
+      autoPlay: this.autoplay,
+      preload: this.preload ?? 'metadata',
+      playsinline: this.playsInline,
+      endVideoBehavior: this.loop && 'loop',
+      chromeless: !this.controls,
+      playButton: this.controls,
+    };
 
-    // Sadly the JW player setup/render will not work in the shadow DOM.
-    this.querySelector('.jw-style')?.remove();
-    this.querySelector('.jwplayer')?.remove();
+    // Sadly the setup/render will not work in the shadow DOM.
+    this.querySelector('.wistia_embed')?.remove();
     this.append(templateLightDOM.content.cloneNode(true));
 
-    this.api = JW(this.querySelector('.jwplayer')).setup({
-      width: '100%',
-      height: '100%',
-      preload: this.getAttribute('preload') ?? 'metadata',
-      ...media,
+    const div = this.querySelector('.wistia_embed');
+    div.classList.add(`wistia_async_${id}`);
+
+    const scriptUrl = 'https://fast.wistia.com/assets/external/E-v1.js';
+    await loadScript(scriptUrl, 'Wistia');
+    const onReadyPromise = publicPromise();
+    const onReady = onReadyPromise.resolve;
+    window._wq.push({
+      id,
+      onReady,
+      options,
     });
 
-    await promisify(this.api.on, this.api)('ready');
-
-    this.api.getContainer().classList.toggle('jw-no-controls', !this.controls);
+    this.api = await onReadyPromise;
 
     this.dispatchEvent(new Event('loadcomplete'));
     this.loadComplete.resolve();
@@ -85,9 +86,10 @@ class JWPlayerVideoElement extends VideoBaseElement {
 
     switch (attrName) {
       case 'controls':
-        this.api
-          .getContainer()
-          .classList.toggle('jw-no-controls', !this.controls);
+        this.api.bigPlayButtonEnabled(this.controls);
+        this.controls
+          ? this.api.releaseChromeless()
+          : this.api.requestChromeless();
         break;
       case 'muted':
         this.muted = this.getAttribute('muted') != null;
@@ -97,6 +99,16 @@ class JWPlayerVideoElement extends VideoBaseElement {
 
   get paused() {
     return this.nativeEl?.paused ?? true;
+  }
+
+  get duration() {
+    return this.api?.duration();
+  }
+
+  play() {
+    // wistia.play doesn't return a play promise.
+    this.api.play();
+    return promisify(this.addEventListener.bind(this))('playing');
   }
 
   get src() {
@@ -124,16 +136,11 @@ class JWPlayerVideoElement extends VideoBaseElement {
   }
 }
 
-if (
-  window.customElements.get('jwplayer-video') ||
-  window.JWPlayerVideoElement
-) {
-  console.debug(
-    'JWPlayerVideoElement: <jwplayer-video> defined more than once.'
-  );
+if (window.customElements.get('wistia-video') || window.WistiaVideoElement) {
+  console.debug('WistiaVideoElement: <wistia-video> defined more than once.');
 } else {
-  window.JWPlayerVideoElement = JWPlayerVideoElement;
-  window.customElements.define('jwplayer-video', JWPlayerVideoElement);
+  window.WistiaVideoElement = WistiaVideoElement;
+  window.customElements.define('wistia-video', WistiaVideoElement);
 }
 
-export default JWPlayerVideoElement;
+export default WistiaVideoElement;

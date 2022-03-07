@@ -1,31 +1,31 @@
 {
-  "name": "jwplayer-video-element",
+  "name": "wistia-video-element",
   "version": "0.0.4",
   "type": "module",
   "description": "Custom element (web component) for the JW player.",
   "keywords": [
-    "jwplayer",
+    "wistia",
     "video",
     "player",
     "web component",
     "custom element"
   ],
-  "homepage": "https://github.com/luwes/jwplayer-video-element#readme",
+  "homepage": "https://github.com/luwes/wistia-video-element#readme",
   "bugs": {
-    "url": "https://github.com/luwes/jwplayer-video-element/issues"
+    "url": "https://github.com/luwes/wistia-video-element/issues"
   },
-  "main": "dist/jwplayer-video-element.js",
+  "main": "dist/wistia-video-element.js",
   "files": [
     "src",
     "dist"
   ],
-  "repository": "luwes/jwplayer-video-element",
+  "repository": "luwes/wistia-video-element",
   "author": "Wesley Luyten <me@wesleyluyten.com> (https://wesleyluyten.com)",
   "license": "MIT",
   "scripts": {
     "test": "web-test-runner **/*test.js --node-resolve",
     "dev": "esbuild src/* --servedir=. --outdir=dist",
-    "build": "esbuild src/jwplayer-video-element.js --sourcemap --bundle --minify --outdir=dist",
+    "build": "esbuild src/wistia-video-element.js --sourcemap --bundle --minify --outdir=dist",
     "prepublishOnly": "yarn build"
   },
   "prettier": {
