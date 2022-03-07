@@ -1,6 +1,6 @@
 # `<wistia-video>`
 
-A custom element (web component) for the JW player.
+A custom element (web component) for the Wistia player.
 
 The element API matches the HTML5 `<video>` tag, so it can be easily swapped with other media, and be compatible with other UI components that work with the video tag.
 
