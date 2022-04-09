@@ -29,6 +29,26 @@ import { publicPromise } from './utils.js';
   SOFTWARE.
  */
 
+// The attr list w/ types allows a video base element to use the attributes in
+// the property getters as defaults with correct type conversion when the async
+// nativeEl is not available yet.
+
+const nativeAttrs = {
+  autopictureinpicture: Boolean,
+  autoplay: Boolean,
+  controls: Boolean,
+  controlslist: String,
+  crossorigin: String,
+  disablepictureinpicture: Boolean,
+  disableremoteplayback: Boolean,
+  loop: Boolean,
+  muted: Boolean,
+  playsinline: Boolean,
+  poster: String,
+  preload: String,
+  src: String,
+};
+
 class VideoBaseElement extends HTMLElement {
   constructor() {
     super();
@@ -73,38 +93,7 @@ class VideoBaseElement extends HTMLElement {
   // observedAttributes is required to trigger attributeChangedCallback
   // for any attributes on the custom element.
   // Attributes need to be the lowercase word, e.g. crossorigin, not crossOrigin
-  static get observedAttributes() {
-    let attrs = [];
-
-    // Instead of manually creating a list of all observed attributes,
-    // observe any getter/setter prop name (lowercased)
-    Object.getOwnPropertyNames(this.prototype).forEach((propName) => {
-      let isFunc = false;
-
-      // Non-func properties throw errors because it's not an instance
-      try {
-        if (typeof this.prototype[propName] === 'function') {
-          isFunc = true;
-        }
-      } catch (e) {
-        // ignore
-      }
-
-      // Exclude functions and constants
-      if (!isFunc && propName !== propName.toUpperCase()) {
-        attrs.push(propName.toLowerCase());
-      }
-    });
-
-    // Include any attributes from the super class (recursive)
-    const supAttrs = Object.getPrototypeOf(this).observedAttributes;
-
-    if (supAttrs) {
-      attrs = attrs.concat(supAttrs);
-    }
-
-    return attrs;
-  }
+  static observedAttributes = Object.keys(nativeAttrs);
 
   // We need to handle sub-class custom attributes differently from
   // attrs meant to be passed to the internal native el.
@@ -158,7 +147,7 @@ class VideoBaseElement extends HTMLElement {
 // Skipping HTMLElement because of things like "attachShadow"
 // causing issues. Most of those props still need to apply to
 // the custom element.
-// But includign EventTarget props because most events emit from
+// But including EventTarget props because most events emit from
 // the native element.
 let nativeElProps = [];
 
@@ -203,10 +192,10 @@ nativeElProps.forEach((prop) => {
       return this.nativeEl[prop].apply(this.nativeEl, arguments);
     };
   } else {
-    // Getter
+    // Getter with defaults from attributes or blank test element
     let config = {
       get() {
-        return this.nativeEl?.[prop];
+        return this.nativeEl?.[prop] ?? getInitialAttr(this, prop) ?? nativeElTest[prop];
       },
     };
 
@@ -221,6 +210,16 @@ nativeElProps.forEach((prop) => {
     Object.defineProperty(VideoBaseElement.prototype, prop, config);
   }
 });
+
+function getInitialAttr(instance, propName) {
+  let attrName = propName.toLowerCase();
+  let type = nativeAttrs[attrName];
+  if (type === Boolean) {
+    return instance.hasAttribute(attrName);
+  } else if (type === String) {
+    return instance.getAttribute(attrName);
+  }
+}
 
 function arrayFindAnyCase(arr, word) {
   let found = null;

@@ -54,6 +54,7 @@ class WistiaVideoElement extends VideoBaseElement {
       endVideoBehavior: this.loop && 'loop',
       chromeless: !this.controls,
       playButton: this.controls,
+      muted: this.muted,
     };
 
     // Sadly the setup/render will not work in the shadow DOM.
@@ -79,7 +80,9 @@ class WistiaVideoElement extends VideoBaseElement {
     this.dispatchEvent(new Event('loadcomplete'));
     this.loadComplete.resolve();
 
-    this.volume = 1;
+    await this.loadComplete;
+
+    this.dispatchEvent(new Event('durationchange'));
   }
 
   async attributeChangedCallback(attrName, oldValue, newValue) {
@@ -101,15 +104,11 @@ class WistiaVideoElement extends VideoBaseElement {
           ? this.api.releaseChromeless()
           : this.api.requestChromeless();
         break;
-      case 'muted':
-        this.muted = this.getAttribute('muted') != null;
-        break;
     }
   }
 
-  get paused() {
-    return this.nativeEl?.paused ?? true;
-  }
+  // Override some methods w/ defaults if the video element is not ready yet when called.
+  // Some methods require the Wistia API instead of the native video element API.
 
   get duration() {
     return this.api?.duration();
@@ -121,6 +120,9 @@ class WistiaVideoElement extends VideoBaseElement {
     return promisify(this.addEventListener.bind(this))('playing');
   }
 
+  // If the getter from VideoBaseElement is overriden, it's required to define
+  // the setter again too unless it's a readonly property! It's a JS thing.
+
   get src() {
     return this.getAttribute('src');
   }
@@ -128,6 +130,10 @@ class WistiaVideoElement extends VideoBaseElement {
   set src(val) {
     if (this.src == val) return;
     this.setAttribute('src', val);
+  }
+
+  get controls() {
+    return this.hasAttribute('controls');
   }
 
   set controls(val) {
@@ -139,10 +145,6 @@ class WistiaVideoElement extends VideoBaseElement {
       // Remove boolean attribute if false, 0, '', null, undefined.
       this.removeAttribute('controls');
     }
-  }
-
-  get controls() {
-    return this.getAttribute('controls') != null;
   }
 }
 
