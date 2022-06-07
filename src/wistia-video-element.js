@@ -4,6 +4,11 @@ import { loadScript, promisify, PublicPromise } from './utils.js';
 
 const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
+<style class="wistia_style">
+  .wistia_embed {
+    height: 100%;
+  }
+</style>
 <div class="wistia_embed"></div>
 `;
 
@@ -48,6 +53,7 @@ class WistiaVideoElement extends SuperVideoElement {
     };
 
     // Sadly the setup/render will not work in the shadow DOM.
+    this.querySelector('.wistia_style')?.remove();
     this.querySelector('.wistia_embed')?.remove();
     this.append(templateLightDOM.content.cloneNode(true));
 
