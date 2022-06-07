@@ -1,18 +1,9 @@
 // https://wistia.com/support/developers/player-api
-import VideoBaseElement from './video-base-element.js';
-import { loadScript, promisify, publicPromise } from './utils.js';
+import { SuperVideoElement } from 'super-media-element';
+import { loadScript, promisify, PublicPromise } from './utils.js';
 
 const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
-<style class="wistia_style">
-  .wistia_embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-</style>
 <div class="wistia_embed"></div>
 `;
 
@@ -20,21 +11,17 @@ const templateShadowDOM = document.createElement('template');
 templateShadowDOM.innerHTML = `
 <style>
   :host {
-    display: block;
     width: 100%;
-    position: relative;
-    background: #000;
   }
 </style>
-<slot></slot>
 `;
 
-class WistiaVideoElement extends VideoBaseElement {
+class WistiaVideoElement extends SuperVideoElement {
   constructor() {
     super();
-
-    this.attachShadow({ mode: 'open' });
     this.shadowRoot.append(templateShadowDOM.content.cloneNode(true));
+
+    this.loadComplete = new PublicPromise();
   }
 
   get nativeEl() {
@@ -42,8 +29,11 @@ class WistiaVideoElement extends VideoBaseElement {
   }
 
   async load() {
-    if (this.hasLoaded) this.loadComplete = publicPromise();
+    if (this.hasLoaded) this.loadComplete = new PublicPromise();
     this.hasLoaded = true;
+
+    // Wait 1 tick to allow other attributes to be set.
+    await Promise.resolve();
 
     const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/i;
     const [, id] = this.src.match(MATCH_SRC);
@@ -54,11 +44,10 @@ class WistiaVideoElement extends VideoBaseElement {
       endVideoBehavior: this.loop && 'loop',
       chromeless: !this.controls,
       playButton: this.controls,
-      muted: this.muted,
+      muted: this.defaultMuted,
     };
 
     // Sadly the setup/render will not work in the shadow DOM.
-    this.querySelector('.wistia_style')?.remove();
     this.querySelector('.wistia_embed')?.remove();
     this.append(templateLightDOM.content.cloneNode(true));
 
@@ -67,15 +56,14 @@ class WistiaVideoElement extends VideoBaseElement {
 
     const scriptUrl = 'https://fast.wistia.com/assets/external/E-v1.js';
     await loadScript(scriptUrl, 'Wistia');
-    const onReadyPromise = publicPromise();
-    const onReady = onReadyPromise.resolve;
-    window._wq.push({
-      id,
-      onReady,
-      options,
-    });
 
-    this.api = await onReadyPromise;
+    this.api = await new Promise((onReady) => {
+      globalThis._wq.push({
+        id,
+        onReady,
+        options,
+      });
+    });
 
     this.dispatchEvent(new Event('loadcomplete'));
     this.loadComplete.resolve();
@@ -120,7 +108,7 @@ class WistiaVideoElement extends VideoBaseElement {
     return promisify(this.addEventListener.bind(this))('playing');
   }
 
-  // If the getter from VideoBaseElement is overriden, it's required to define
+  // If the getter from SuperVideoElement is overriden, it's required to define
   // the setter again too unless it's a readonly property! It's a JS thing.
 
   get src() {
@@ -148,11 +136,14 @@ class WistiaVideoElement extends VideoBaseElement {
   }
 }
 
-if (window.customElements.get('wistia-video') || window.WistiaVideoElement) {
+if (
+  globalThis.customElements.get('wistia-video') ||
+  globalThis.WistiaVideoElement
+) {
   console.debug('WistiaVideoElement: <wistia-video> defined more than once.');
 } else {
-  window.WistiaVideoElement = WistiaVideoElement;
-  window.customElements.define('wistia-video', WistiaVideoElement);
+  globalThis.WistiaVideoElement = WistiaVideoElement;
+  globalThis.customElements.define('wistia-video', WistiaVideoElement);
 }
 
 export default WistiaVideoElement;
