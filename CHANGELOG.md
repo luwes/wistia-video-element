@@ -1,3 +1,13 @@
+## [0.1.2](https://github.com/luwes/wistia-video-element/compare/v0.1.0...v0.1.2) (2022-06-18)
+
+
+### Bug Fixes
+
+* height issue ([19e1c60](https://github.com/luwes/wistia-video-element/commit/19e1c60943039fb5778e7e46d09e78338382e92f))
+* super-media-element from 0.0.1 to 0.2.0 ([#1](https://github.com/luwes/wistia-video-element/issues/1)) ([0f07740](https://github.com/luwes/wistia-video-element/commit/0f077401fad1a92424f6591ce7e30490016c7a17))
+
+
+
 ## [0.1.1](https://github.com/luwes/wistia-video-element/compare/v0.1.0...v0.1.1) (2022-06-07)
 
 
