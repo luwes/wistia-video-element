@@ -1,3 +1,13 @@
+## [0.1.3](https://github.com/luwes/wistia-video-element/compare/v0.1.2...v0.1.3) (2022-07-03)
+
+
+### Bug Fixes
+
+* loadScript race condition ([c39adde](https://github.com/luwes/wistia-video-element/commit/c39adde05cdaa67d448fd31e1236abe6ce6c24a5))
+* upgrade super-media-element ([5206daf](https://github.com/luwes/wistia-video-element/commit/5206daf2ebf92787f3fb5e79742e7303981105e1))
+
+
+
 ## [0.1.2](https://github.com/luwes/wistia-video-element/compare/v0.1.0...v0.1.2) (2022-06-18)
 
 
