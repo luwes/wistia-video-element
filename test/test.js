@@ -1,5 +1,4 @@
 import { fixture, assert, aTimeout } from "@open-wc/testing";
-import "../src/wistia-video-element.js";
 
 describe("<wistia-video>", () => {
   it("has a video like API", async function () {
