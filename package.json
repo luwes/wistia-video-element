@@ -1,6 +1,6 @@
 {
   "name": "wistia-video-element",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Custom element (web component) for the Wistia player.",
   "type": "module",
   "main": "wistia-video-element.js",
