@@ -8,6 +8,9 @@
       href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
     />
     <style>
+      html {
+        height: 100%;
+      }
       body {
         min-height: 80%;
         display: flex;
@@ -20,7 +23,14 @@
         background: #000;
       }
     </style>
-    <script type="module" src="./dist/wistia-video-element.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "super-media-element": "https://cdn.jsdelivr.net/npm/super-media-element"
+        }
+      }
+    </script>
+    <script type="module" src="./wistia-video-element.js"></script>
   </head>
   <body>
     <h1>&lt;wistia-video&gt;</h1>
