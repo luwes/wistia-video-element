@@ -1,4 +1,4 @@
-# `<wistia-video>`
+# `<wistia-video>` [![Version](https://img.shields.io/npm/v/wistia-video-element)](https://www.npmjs.com/package/wistia-video-element) [![Badge size](https://img.badgesize.io/https://cdn.jsdelivr.net/npm/wistia-video-element/+esm?compression=gzip&label=gzip)](https://cdn.jsdelivr.net/npm/wistia-video-element/+esm)
 
 A custom element (web component) for the Wistia player.
 
@@ -12,7 +12,7 @@ One of the goals was to have `<wistia-video>` seamlessly integrate with [Media C
 
 <!-- prettier-ignore -->
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wistia-video-element@0.2"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wistia-video-element@0.2/+esm"></script>
 <wistia-video controls src="https://wesleyluyten.wistia.com/medias/oifkgmxnkb"></wistia-video>
 ```
 
@@ -24,7 +24,7 @@ One of the goals was to have `<wistia-video>` seamlessly integrate with [Media C
 
 <!-- prettier-ignore -->
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/wistia-video-element@0.2"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wistia-video-element@0.2/+esm"></script>
 ```
 
 ### Adding to your app via `npm`
