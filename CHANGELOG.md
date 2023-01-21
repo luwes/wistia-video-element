@@ -1,3 +1,12 @@
+# [0.2.0](https://github.com/luwes/wistia-video-element/compare/v0.1.3...v0.2.0) (2023-01-21)
+
+
+### Features
+
+* make build-less NPM module ([15024d1](https://github.com/luwes/wistia-video-element/commit/15024d1a26723c728c85694a3eabe989b7c57097))
+
+
+
 ## [0.1.3](https://github.com/luwes/wistia-video-element/compare/v0.1.2...v0.1.3) (2022-07-03)
 
 
