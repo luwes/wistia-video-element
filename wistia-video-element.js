@@ -132,13 +132,7 @@ class WistiaVideoElement extends SuperVideoElement {
 
   set controls(val) {
     if (this.controls == val) return;
-
-    if (val) {
-      this.setAttribute('controls', '');
-    } else {
-      // Remove boolean attribute if false, 0, '', null, undefined.
-      this.removeAttribute('controls');
-    }
+    this.toggleAttribute('controls', Boolean(val));
   }
 }
 
