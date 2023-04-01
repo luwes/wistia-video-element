@@ -2,12 +2,12 @@
 import { SuperVideoElement } from 'super-media-element';
 
 const templateLightDOM = document.createElement('template');
-templateLightDOM.innerHTML = `
+templateLightDOM.innerHTML = /*html*/`
 <div class="wistia_embed"></div>
 `;
 
 const templateShadowDOM = document.createElement('template');
-templateShadowDOM.innerHTML = `
+templateShadowDOM.innerHTML = /*html*/`
 <style>
   :host {
     width: 100%;
