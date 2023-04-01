@@ -3,11 +3,6 @@ import { SuperVideoElement } from 'super-media-element';
 
 const templateLightDOM = document.createElement('template');
 templateLightDOM.innerHTML = `
-<style class="wistia_style">
-  .wistia_embed {
-    height: 100%;
-  }
-</style>
 <div class="wistia_embed"></div>
 `;
 
@@ -16,15 +11,21 @@ templateShadowDOM.innerHTML = `
 <style>
   :host {
     width: 100%;
+    min-width: 300px;
+    min-height: 150px;
+  }
+  ::slotted(.wistia_embed) {
+    height: 100%;
   }
 </style>
+<slot></slot>
 `;
 
 class WistiaVideoElement extends SuperVideoElement {
+  static template = templateShadowDOM;
+
   constructor() {
     super();
-    this.shadowRoot.append(templateShadowDOM.content.cloneNode(true));
-
     this.loadComplete = new PublicPromise();
   }
 
@@ -40,7 +41,7 @@ class WistiaVideoElement extends SuperVideoElement {
     await Promise.resolve();
 
     const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/i;
-    const [, id] = this.src.match(MATCH_SRC);
+    const id = this.src.match(MATCH_SRC)[1];
     const options = {
       autoPlay: this.autoplay,
       preload: this.preload ?? 'metadata',
@@ -57,6 +58,7 @@ class WistiaVideoElement extends SuperVideoElement {
     this.append(templateLightDOM.content.cloneNode(true));
 
     const div = this.querySelector('.wistia_embed');
+    if (!div.id) div.id = uniqueId(id);
     div.classList.add(`wistia_async_${id}`);
 
     const scriptUrl = 'https://fast.wistia.com/assets/external/E-v1.js';
@@ -64,7 +66,7 @@ class WistiaVideoElement extends SuperVideoElement {
 
     this.api = await new Promise((onReady) => {
       globalThis._wq.push({
-        id,
+        id: div.id,
         onReady,
         options,
       });
@@ -169,6 +171,12 @@ export function promisify(fn) {
         else resolve(res[0]);
       });
     });
+}
+
+let idCounter = 0;
+export function uniqueId(prefix) {
+  const id = ++idCounter;
+  return `${prefix}${id}`;
 }
 
 /**
