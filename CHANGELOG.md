@@ -1,3 +1,21 @@
+# [0.3.0](https://github.com/luwes/wistia-video-element/compare/v0.1.0...v0.3.0) (2023-04-01)
+
+
+### Bug Fixes
+
+* dup player bug, add min dimensions ([9f47c57](https://github.com/luwes/wistia-video-element/commit/9f47c570415f3fafd66b059bf8259c7c4bc4ee46))
+* height issue ([19e1c60](https://github.com/luwes/wistia-video-element/commit/19e1c60943039fb5778e7e46d09e78338382e92f))
+* loadScript race condition ([95788ad](https://github.com/luwes/wistia-video-element/commit/95788adce62bca68583be694edfcb39fc74f0ca3))
+* super-media-element from 0.0.1 to 0.2.0 ([#1](https://github.com/luwes/wistia-video-element/issues/1)) ([0a9e7e5](https://github.com/luwes/wistia-video-element/commit/0a9e7e57aad66e05072350c0e801bbd503fbbd34))
+* upgrade super-media-element ([f541c69](https://github.com/luwes/wistia-video-element/commit/f541c69abba230c42e51706125909ada6ae23a5b))
+
+
+### Features
+
+* make build-less NPM module ([c5816dc](https://github.com/luwes/wistia-video-element/commit/c5816dc68da56c395f1955ab4ed4108afc57e40f))
+
+
+
 # [0.2.0](https://github.com/luwes/wistia-video-element/compare/v0.1.3...v0.2.0) (2023-01-21)
 
 
