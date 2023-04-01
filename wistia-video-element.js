@@ -53,7 +53,6 @@ class WistiaVideoElement extends SuperVideoElement {
     };
 
     // Sadly the setup/render will not work in the shadow DOM.
-    this.querySelector('.wistia_style')?.remove();
     this.querySelector('.wistia_embed')?.remove();
     this.append(templateLightDOM.content.cloneNode(true));
 

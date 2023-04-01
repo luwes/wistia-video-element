@@ -52,7 +52,15 @@
   src="https://wesleyluyten.wistia.com/medias/oifkgmxnkb"
   loop
   muted
-></wistia-video>
+  style="position:relative;"
+>
+  <div style="opacity:0; overflow:hidden; position:absolute; inset:0; transition:opacity .2s;">
+    <img
+      src="https://fast.wistia.com/embed/medias/oifkgmxnkb/swatch"
+      style="filter:blur(5px); height:100%; object-fit:contain; width:100%;"
+      alt="" aria-hidden="true" onload="this.parentNode.style.opacity=1;">
+  </div>
+</wistia-video>
 
 <br>
 
