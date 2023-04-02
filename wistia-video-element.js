@@ -10,11 +10,14 @@ const templateShadowDOM = document.createElement('template');
 templateShadowDOM.innerHTML = /*html*/`
 <style>
   :host {
-    width: 100%;
+    display: inline-block;
     min-width: 300px;
     min-height: 150px;
+    position: relative;
   }
   ::slotted(.wistia_embed) {
+    position: absolute;
+    width: 100%;
     height: 100%;
   }
 </style>
