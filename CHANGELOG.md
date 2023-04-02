@@ -1,3 +1,14 @@
+## [0.3.1](https://github.com/luwes/wistia-video-element/compare/v0.3.0...v0.3.1) (2023-04-02)
+
+
+### Bug Fixes
+
+* add Wistia blurry placeholder image ([78250ea](https://github.com/luwes/wistia-video-element/commit/78250ea961c4b23d8b474a40ab8000e10c56a9b2))
+* improve sizing ([4b7ef4d](https://github.com/luwes/wistia-video-element/commit/4b7ef4dea348ded5ef46ce26da77711af66c03ce))
+* use toggleAttribute() ([cda8c32](https://github.com/luwes/wistia-video-element/commit/cda8c322d8597a802b9ec1f0d7bb6d91f0373b78))
+
+
+
 # [0.3.0](https://github.com/luwes/wistia-video-element/compare/v0.1.0...v0.3.0) (2023-04-01)
 
 
