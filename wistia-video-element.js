@@ -40,6 +40,8 @@ class WistiaVideoElement extends SuperVideoElement {
     if (this.hasLoaded) this.loadComplete = new PublicPromise();
     this.hasLoaded = true;
 
+    this.dispatchEvent(new Event('loadstart'));
+
     // Wait 1 tick to allow other attributes to be set.
     await Promise.resolve();
 
@@ -78,8 +80,6 @@ class WistiaVideoElement extends SuperVideoElement {
     this.loadComplete.resolve();
 
     await this.loadComplete;
-
-    this.dispatchEvent(new Event('durationchange'));
   }
 
   async attributeChangedCallback(attrName, oldValue, newValue) {
