@@ -1,3 +1,12 @@
+## [1.0.1](https://github.com/luwes/wistia-video-element/compare/v1.0.0...v1.0.1) (2023-04-02)
+
+
+### Bug Fixes
+
+* missing `loadstart` event ([f853761](https://github.com/luwes/wistia-video-element/commit/f8537619f70e35e3f60c13805626ad9d725d504d))
+
+
+
 # [1.0.0](https://github.com/luwes/wistia-video-element/compare/v0.3.1...v1.0.0) (2023-04-02)
 
 
