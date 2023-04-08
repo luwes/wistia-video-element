@@ -29,7 +29,7 @@ class WistiaVideoElement extends SuperVideoElement {
   static skipAttributes = ['src'];
 
   get nativeEl() {
-    return this.api?.elem();
+    return this.api?.elem() ?? this.querySelector('video');
   }
 
   async load() {

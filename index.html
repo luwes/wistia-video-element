@@ -42,7 +42,6 @@
 
 <wistia-video
   controls
-  src="https://wesleyluyten.wistia.com/medias/oifkgmxnkb"
   loop
   muted
   style="position:relative;"
@@ -55,12 +54,17 @@
   </div>
 </wistia-video>
 
+<script>
+  let video = document.querySelector('wistia-video');
+  video.src = "https://wesleyluyten.wistia.com/medias/oifkgmxnkb";
+</script>
+
 <br>
 
 <button id="loadbtn">Load new clip</button>
 
 <script>
-  const video = document.querySelector('wistia-video');
+  video = document.querySelector('wistia-video');
 
   loadbtn.onclick = () => {
     video.src = 'https://wesleyluyten.wistia.com/medias/1ekn652fs5';
@@ -148,3 +152,4 @@
     <media-fullscreen-button></media-fullscreen-button>
   </media-control-bar>
 </media-controller>
+

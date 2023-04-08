@@ -14,10 +14,10 @@
   "scripts": {
     "lint": "npx eslint *.js",
     "test": "wet run",
-    "dev": "wet serve"
+    "dev": "wet serve --cors"
   },
   "dependencies": {
-    "super-media-element": "1.1.1"
+    "super-media-element": "1.1.2"
   },
   "devDependencies": {
     "wet-run": "^0.0.7"
