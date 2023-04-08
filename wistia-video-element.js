@@ -89,19 +89,21 @@ class WistiaVideoElement extends SuperVideoElement {
       return;
     }
 
-    super.attributeChangedCallback(attrName, oldValue, newValue);
+    if (attrName === 'controls') {
+      await this.loadComplete;
 
-    // Don't await super.attributeChangedCallback above, it would resolve later.
-    await this.loadComplete;
-
-    switch (attrName) {
-      case 'controls':
-        this.api.bigPlayButtonEnabled(this.controls);
-        this.controls
-          ? this.api.releaseChromeless()
-          : this.api.requestChromeless();
-        break;
+      switch (attrName) {
+        case 'controls':
+          this.api.bigPlayButtonEnabled(this.controls);
+          this.controls
+            ? this.api.releaseChromeless()
+            : this.api.requestChromeless();
+          break;
+      }
+      return;
     }
+
+    super.attributeChangedCallback(attrName, oldValue, newValue);
   }
 
   // Override some methods w/ defaults if the video element is not ready yet when called.
@@ -125,7 +127,6 @@ class WistiaVideoElement extends SuperVideoElement {
   }
 
   set src(val) {
-    if (this.src == val) return;
     this.setAttribute('src', val);
   }
 
@@ -134,7 +135,6 @@ class WistiaVideoElement extends SuperVideoElement {
   }
 
   set controls(val) {
-    if (this.controls == val) return;
     this.toggleAttribute('controls', Boolean(val));
   }
 }

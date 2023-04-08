@@ -66,7 +66,19 @@
     video.src = 'https://wesleyluyten.wistia.com/medias/1ekn652fs5';
   }
 
+  video.addEventListener('emptied', (e) => {
+    console.log(e.type);
+  });
+
   video.addEventListener('loadstart', (e) => {
+    console.log(e.type);
+  });
+
+  video.addEventListener('loadedmetadata', (e) => {
+    console.log(e.type);
+  });
+
+  video.addEventListener('loadeddata', (e) => {
     console.log(e.type);
   });
 
