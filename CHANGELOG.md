@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/luwes/wistia-video-element/compare/v1.0.4...v1.0.5) (2023-04-09)
+
+
+### Bug Fixes
+
+* update super-media-element v1.1.3 ([6698f8c](https://github.com/luwes/wistia-video-element/commit/6698f8caf797e9579e8c696bd1189b4127fe1402))
+
+
+
 ## [1.0.4](https://github.com/luwes/wistia-video-element/compare/v1.0.3...v1.0.4) (2023-04-08)
 
 
