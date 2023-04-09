@@ -1,3 +1,12 @@
+## [1.0.7](https://github.com/luwes/wistia-video-element/compare/v1.0.6...v1.0.7) (2023-04-09)
+
+
+### Bug Fixes
+
+* add unload support ([4fbf70e](https://github.com/luwes/wistia-video-element/commit/4fbf70e351c6e4c0157a842eaa0c6d44e3cf2f53))
+
+
+
 ## [1.0.6](https://github.com/luwes/wistia-video-element/compare/v1.0.5...v1.0.6) (2023-04-09)
 
 
