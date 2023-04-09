@@ -33,6 +33,13 @@ class WistiaVideoElement extends SuperVideoElement {
   }
 
   async load() {
+    // Cleanup the previous video container.
+    this.querySelector('.wistia_embed')?.remove();
+
+    if (!this.src) {
+      return;
+    }
+
     const MATCH_SRC = /(?:wistia\.com|wi\.st)\/(?:medias|embed)\/(.*)$/i;
     const id = this.src.match(MATCH_SRC)[1];
     const options = {
@@ -46,7 +53,6 @@ class WistiaVideoElement extends SuperVideoElement {
     };
 
     // Sadly the setup/render will not work in the shadow DOM.
-    this.querySelector('.wistia_embed')?.remove();
     this.append(templateLightDOM.content.cloneNode(true));
 
     const div = this.querySelector('.wistia_embed');
