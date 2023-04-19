@@ -1,3 +1,13 @@
+## [1.0.8](https://github.com/luwes/wistia-video-element/compare/v1.0.7...v1.0.8) (2023-04-19)
+
+
+### Bug Fixes
+
+* default muted bug ([825ccb9](https://github.com/luwes/wistia-video-element/commit/825ccb9e25e348ba3613fc2beaed36746e6e60cc))
+* Next.js SSR document type error ([afc2e9c](https://github.com/luwes/wistia-video-element/commit/afc2e9cd7f92e3e7db98a46750f214fe81354500))
+
+
+
 ## [1.0.7](https://github.com/luwes/wistia-video-element/compare/v1.0.6...v1.0.7) (2023-04-09)
 
 
