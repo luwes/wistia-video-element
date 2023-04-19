@@ -1,28 +1,32 @@
 // https://wistia.com/support/developers/player-api
 import { SuperVideoElement } from 'super-media-element';
 
-const templateLightDOM = document.createElement('template');
-templateLightDOM.innerHTML = /*html*/`
-<div class="wistia_embed"></div>
-`;
+const templateLightDOM = globalThis.document?.createElement('template');
+if (templateLightDOM) {
+  templateLightDOM.innerHTML = /*html*/`
+  <div class="wistia_embed"></div>
+  `;
+}
 
-const templateShadowDOM = document.createElement('template');
-templateShadowDOM.innerHTML = /*html*/`
-<style>
-  :host {
-    display: inline-block;
-    min-width: 300px;
-    min-height: 150px;
-    position: relative;
-  }
-  ::slotted(.wistia_embed) {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-  }
-</style>
-<slot></slot>
-`;
+const templateShadowDOM = globalThis.document?.createElement('template');
+if (templateShadowDOM) {
+  templateShadowDOM.innerHTML = /*html*/`
+  <style>
+    :host {
+      display: inline-block;
+      min-width: 300px;
+      min-height: 150px;
+      position: relative;
+    }
+    ::slotted(.wistia_embed) {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <slot></slot>
+  `;
+}
 
 class WistiaVideoElement extends SuperVideoElement {
   static template = templateShadowDOM;
@@ -125,7 +129,7 @@ export function uniqueId(prefix) {
   return `${prefix}${id}`;
 }
 
-if (!globalThis.customElements.get('wistia-video')) {
+if (globalThis.customElements && !globalThis.customElements.get('wistia-video')) {
   globalThis.customElements.define('wistia-video', WistiaVideoElement);
 }
 
