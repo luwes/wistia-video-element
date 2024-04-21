@@ -1,3 +1,12 @@
+## [1.0.9](https://github.com/luwes/wistia-video-element/compare/v1.0.8...v1.0.9) (2024-04-21)
+
+
+### Bug Fixes
+
+* upgrade deps & fix readme badges ([a714643](https://github.com/luwes/wistia-video-element/commit/a714643d22606503d29be2d03bc3bbc6b137d609))
+
+
+
 ## [1.0.8](https://github.com/luwes/wistia-video-element/compare/v1.0.7...v1.0.8) (2023-04-19)
 
 
